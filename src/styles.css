@@ -1,1 +1,261 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   MA. BERTOMEU — sistema de diseño global
+   Paleta derivada del logo: marfil, tinta cálida y dos oros.
+   Titulares: Cormorant Garamond · Cuerpo: Jost
+   ============================================================ */
+
+/* ---------- Variables ---------- */
+
+:root {
+  --fondo: #FDFCF8;
+  --superficie: #FFFFFF;
+  --tinta: #211D15;
+  --tinta-suave: #6D6455;
+  --oro: #A9873B;
+  --oro-oscuro: #8A6E2F;
+  --oro-claro: #E4D3A6;
+  --linea: #EAE3D3;
+  --error: #A33B2E;
+  --ok: #3C6E47;
+  --radio: 2px;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', 'Segoe UI', sans-serif;
+}
+
+/* ---------- Base ---------- */
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 1rem; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font-family: var(--sans); cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--oro);
+  outline-offset: 2px;
+}
+
+/* ---------- Estructura ---------- */
+
+.contenedor {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  width: 100%;
+}
+
+/* Solo márgenes verticales: así no rompe el centrado de .contenedor */
+.cabecera-seccion {
+  margin-top: 4.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.titulo-seccion {
+  text-align: center;
+  margin: 0;
+}
+
+.pagina { padding-top: 2.5rem; }
+.centro { text-align: center; }
+
+/* El arco del logo, como divisor de secciones */
+.arco {
+  display: block;
+  width: 120px;
+  height: 22px;
+  margin-top: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--oro);
+}
+
+/* ---------- Texto ---------- */
+
+.entrada {
+  max-width: 62ch;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--tinta-suave);
+  font-size: 1.05rem;
+}
+
+.suave { color: var(--tinta-suave); }
+
+.oro { color: var(--oro-oscuro); }
+
+.eyebrow {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--oro-oscuro);
+  margin-bottom: 1rem;
+}
+
+.estado-vacio {
+  text-align: center;
+  color: var(--tinta-suave);
+  padding: 3rem 0;
+}
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2.2rem;
+  border: 1px solid var(--oro);
+  border-radius: var(--radio);
+  background: var(--oro);
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.btn:hover { background: var(--oro-oscuro); border-color: var(--oro-oscuro); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-fantasma {
+  background: transparent;
+  color: var(--oro-oscuro);
+}
+.btn-fantasma:hover { background: var(--oro); color: #fff; }
+
+.btn-ancho { width: 100%; text-align: center; }
+
+/* ---------- Formularios ---------- */
+
+.campo { display: block; margin-bottom: 1.1rem; }
+
+.campo span {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  margin-bottom: 0.3rem;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--superficie);
+  font: inherit;
+  color: var(--tinta);
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  border-color: var(--oro);
+  outline: none;
+}
+
+.campo textarea { resize: vertical; }
+
+.fila-campos {
+  display: grid;
+  gap: 0 1.25rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.aviso-error { color: var(--error); font-size: 0.9rem; }
+.aviso-ok { color: var(--ok); font-size: 0.9rem; }
+
+.aviso-caja {
+  border: 1px solid var(--oro-claro);
+  border-radius: var(--radio);
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+}
+
+/* ---------- Tarjetas ---------- */
+
+.panel {
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--superficie);
+  padding: 1.5rem;
+}
+
+/* ---------- Productos ---------- */
+
+.grid-productos {
+  display: grid;
+  gap: 1.75rem 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+
+.tarjeta-producto {
+  text-align: center;
+  display: block;
+}
+
+.tarjeta-producto .marco {
+  aspect-ratio: 1;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.tarjeta-producto:hover .marco { border-color: var(--oro-claro); }
+.tarjeta-producto .marco img { width: 100%; height: 100%; object-fit: cover; }
+
+.sin-foto {
+  color: var(--oro-claro);
+  font-family: var(--serif);
+  font-size: 2rem;
+}
+
+.tarjeta-producto h3 { font-size: 1.15rem; margin: 0.8rem 0 0.15rem; }
+.tarjeta-producto .precio { color: var(--oro-oscuro); letter-spacing: 0.05em; margin: 0; }
+.tarjeta-producto .agotado { color: var(--tinta-suave); font-size: 0.85rem; margin: 0.2rem 0 0; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 600px) {
+  .fila-campos { grid-template-columns: 1fr; }
+  .cabecera-seccion { margin-top: 3rem; margin-bottom: 2rem; }
+}
