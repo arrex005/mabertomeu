@@ -10,11 +10,11 @@ export class AuthService {
   private http = inject(HttpClient);
   usuario = signal<Usuario | null>(leerUsuario());
 
-  login(email: string, password: string) {
-    return this.http.post<{ token: string; usuario: Usuario }>(`${API}/auth/login`, { email, password });
+  login(identificador: string, password: string) {
+    return this.http.post<{ token: string; usuario: Usuario }>(`${API}/auth/login`, { identificador, password });
   }
-  registro(nombre: string, email: string, password: string) {
-    return this.http.post<{ token: string; usuario: Usuario }>(`${API}/auth/registro`, { nombre, email, password });
+  registro(datos: { nombre: string; username: string; email: string; password: string; telefono?: string }) {
+    return this.http.post<{ token: string; usuario: Usuario }>(`${API}/auth/registro`, datos);
   }
   entrar(token: string, usuario: Usuario) {
     localStorage.setItem(CLAVE, token);

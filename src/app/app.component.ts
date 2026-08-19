@@ -18,6 +18,9 @@ import { AuthService } from './core/auth.service';
           <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
           <a routerLink="/catalogo" routerLinkActive="activo">Catálogo</a>
           <a routerLink="/como-comprar" routerLinkActive="activo">Cómo comprar</a>
+          @if (auth.usuario()?.rol === 'admin') {
+            <a routerLink="/admin" routerLinkActive="activo">Panel</a>
+          }
         </nav>
 
         <div class="acciones">

@@ -9,7 +9,9 @@ export interface Facetas {
   disponibilidad: { en_stock: number; total: number };
   precio: { min: number; max: number };
 }
-export interface Usuario { id: number; nombre: string; email: string; rol: string; }
+export interface Usuario {
+  id: number; nombre: string; username?: string; email: string; rol: string; verificado?: boolean;
+}
 
 export const eur = (cents: number) =>
   (cents / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });

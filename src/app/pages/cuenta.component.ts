@@ -13,7 +13,9 @@ import { eur } from '../core/core';
       @if (auth.usuario(); as u) {
         <h1>Hola, {{ u.nombre }}</h1>
         <p class="suave">{{ u.email }}</p>
-
+        @if (auth.usuario()?.verificado === false) {
+          <p class="aviso-caja">Te hemos enviado un correo para confirmar tu cuenta. Revisa tu bandeja de entrada y la carpeta de spam.</p>
+        }
         <h2 class="sub">Mis pedidos</h2>
         @if (pedidos().length === 0) {
           <p class="suave">Todavía no has hecho ningún pedido.</p>
@@ -34,7 +36,7 @@ import { eur } from '../core/core';
           }
         }
         <button class="btn btn-fantasma" (click)="salir()">Cerrar sesión</button>
-      } @else {
+      }  @else {
         <div class="panel tarjeta-auth">
           <div class="pestanas">
             <button [class.activa]="modo() === 'login'" (click)="modo.set('login')">Iniciar sesión</button>
@@ -42,11 +44,18 @@ import { eur } from '../core/core';
           </div>
           <form (ngSubmit)="enviar()">
             @if (modo() === 'registro') {
-              <label class="campo"><span>Nombre</span>
+              <label class="campo"><span>Nombre y apellidos</span>
                 <input name="nombre" [(ngModel)]="datos.nombre" required minlength="2"></label>
+              <label class="campo"><span>Nombre de usuario</span>
+                <input name="username" [(ngModel)]="datos.username" required minlength="3"></label>
+              <label class="campo"><span>Email</span>
+                <input name="email" type="email" [(ngModel)]="datos.email" required></label>
+              <label class="campo"><span>Teléfono (opcional)</span>
+                <input name="telefono" type="tel" [(ngModel)]="datos.telefono"></label>
+            } @else {
+              <label class="campo"><span>Email o nombre de usuario</span>
+                <input name="identificador" [(ngModel)]="identificador" required></label>
             }
-            <label class="campo"><span>Email</span>
-              <input name="email" type="email" [(ngModel)]="datos.email" required></label>
             <label class="campo"><span>Contraseña</span>
               <input name="password" type="password" [(ngModel)]="datos.password" required minlength="8"></label>
             @if (error()) { <p class="aviso-error">{{ error() }}</p> }
@@ -86,7 +95,8 @@ export default class CuentaComponent {
   eur = eur;
 
   modo = signal<'login' | 'registro'>('login');
-  datos = { nombre: '', email: '', password: '' };
+  datos = { nombre: '', username: '', email: '', password: '', telefono: '' };
+  identificador = '';
   error = signal('');
   enviando = signal(false);
   pedidos = signal<any[]>([]);
@@ -102,12 +112,12 @@ export default class CuentaComponent {
     this.api.misPedidos().subscribe({ next: p => this.pedidos.set(p), error: () => {} });
   }
 
-  enviar() {
+ enviar() {
     this.error.set('');
     this.enviando.set(true);
     const obs = this.modo() === 'login'
-      ? this.auth.login(this.datos.email, this.datos.password)
-      : this.auth.registro(this.datos.nombre, this.datos.email, this.datos.password);
+      ? this.auth.login(this.identificador, this.datos.password)
+      : this.auth.registro(this.datos);
     obs.subscribe({
       next: r => {
         this.auth.entrar(r.token, r.usuario);
